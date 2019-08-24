@@ -35,7 +35,11 @@ char* GlobalOrderError;
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
-extern void test_tp3(void);
+extern void test_tp3_1(void);
+extern void test_tp3_2(void);
+extern void test_tp3_3(void);
+extern void test_tp3_4(void);
+extern void test_tp3_5(void);
 
 
 /*=======Suite Setup=====*/
@@ -70,7 +74,11 @@ int main(void)
 {
   suite_setup();
   UnityBegin("test_tp3.c");
-  RUN_TEST(test_tp3, 14);
+  RUN_TEST(test_tp3_1, 42);
+  RUN_TEST(test_tp3_2, 43);
+  RUN_TEST(test_tp3_3, 44);
+  RUN_TEST(test_tp3_4, 45);
+  RUN_TEST(test_tp3_5, 46);
 
   return suite_teardown(UnityEnd());
 }
