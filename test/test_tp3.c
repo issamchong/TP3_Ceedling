@@ -88,7 +88,7 @@ void test_tp3_5(void){											//Test if ASCII function converts Hexdecimal to
 	char hex[105]="68 6f 6c 61";
 	printf("%s ",hex);
 	ASCI(hex,strlen(hex),ascii);
-	TEST_ASSERT_EQUAL_HEX16('o',ascii[1]);									//This function  checks if length() did really count correctly the number of  bytes, assuming it is 5
+	TEST_ASSERT_EQUAL_HEX16('h',ascii[h]);									//This function  checks if length() did really count correctly the number of  bytes, assuming it is 5
 }
 /*==================[external functions definition]==========================*/
 
