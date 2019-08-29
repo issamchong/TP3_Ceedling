@@ -15,16 +15,16 @@
 - :test: test_tp3_4
   :line: 77
   :message: ''
-:failures:
 - :test: test_tp3_5
-  :line: 91
-  :message: Expected 0x006F Was 0x0006
+  :line: 85
+  :message: ''
+:failures: []
 :ignores: []
 :counts:
   :total: 5
-  :passed: 4
-  :failed: 1
+  :passed: 5
+  :failed: 0
   :ignored: 0
 :stdout:
 - '68 6f 6c 61 '
-:time: 0.0016991480006254278
+:time: 0.0038284830006887205

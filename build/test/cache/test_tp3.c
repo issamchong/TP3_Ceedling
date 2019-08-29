@@ -167,7 +167,7 @@ void test_tp3_5(void){
 
  ASCI(hex,strlen(hex),ascii);
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('o')), (UNITY_INT)(UNITY_INT16)((ascii[1])), (
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('h')), (UNITY_INT)(UNITY_INT16)((ascii[0])), (
 
 ((void *)0)
 

@@ -85,10 +85,9 @@ void test_tp3_4(void){											   //Test if CompileToken() did compile the tok
 void test_tp3_5(void){											//Test if ASCII function converts Hexdecimal to ASCII correctly by verifying the first letter
 	//TEST_FAIL_MESSAGE("Failed");
 	char ascii[55];
-	char hex[105]="68 6f 6c 61";
-	printf("%s ",hex);
+	char hex[105]="68";
 	ASCI(hex,strlen(hex),ascii);
-	TEST_ASSERT_EQUAL_HEX16('h',ascii[h]);									//This function  checks if length() did really count correctly the number of  bytes, assuming it is 5
+	TEST_ASSERT_EQUAL_HEX16('h',ascii[0]);									//This function  checks if length() did really count correctly the number of  bytes, assuming it is 5
 }
 /*==================[external functions definition]==========================*/
 
