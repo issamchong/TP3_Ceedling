@@ -2,28 +2,29 @@
 :source:
   :path: test
   :file: test_tp3.c
-:successes: []
-:failures:
+:successes:
 - :test: test_tp3_1
-  :line: 63
-  :message: Expected 0x0005 Was 0x0006
+  :line: 42
+  :message: ''
 - :test: test_tp3_2
-  :line: 67
-  :message: Failed
+  :line: 43
+  :message: ''
 - :test: test_tp3_3
-  :line: 76
-  :message: Failed
+  :line: 44
+  :message: ''
 - :test: test_tp3_4
-  :line: 84
-  :message: Failed
+  :line: 77
+  :message: ''
+:failures:
 - :test: test_tp3_5
-  :line: 93
-  :message: Failed
+  :line: 91
+  :message: Expected 0x006F Was 0x0006
 :ignores: []
 :counts:
   :total: 5
-  :passed: 0
-  :failed: 5
+  :passed: 4
+  :failed: 1
   :ignored: 0
-:stdout: []
-:time: 0.00199970699941332
+:stdout:
+- '68 6f 6c 61 '
+:time: 0.0019309630006318912

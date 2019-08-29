@@ -1,7 +1,6 @@
 /* Copyright 2019-2020, Issam ALmustafa
  * All rights reserved.
  *
-
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -28,77 +27,69 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 /*==================[Inclusions]===========================================*/
-
 #include "unity.h"
 #include "tp3.h"
+#include "service_testing.h"
+#include "service_testing.h"
+#include "driver_testing.h"
 /*==================[macros and definitions]=================================*/
-
 /*==================[internal data declaration]==============================*/
-
+static struct MedirPerformance performance;
+Token_pt  ptr;
 /*==================[internal functions declaration]=========================*/
 void tearDown(void);
 void test_tp3_1(void);
 void test_tp3_2(void);
 void test_tp3_3(void);
-void test_tp3_4(void);
-void test_tp3_5(void)
 /*==================[internal data definition]===============================*/
-
 /*==================[external data definition]===============================*/
-
 /*==================[internal functions definition]==========================*/
-;
-void tearDown(void){					   //This function is used by ceedling and needs to be empty
+void tearDown(void){}					   		//This function is used by ceedling and needs to be empty
 
-
+void test_tp3_1(void){							//Test GetHeap function
+	//TEST_FAIL_MESSAGE("Failed");				//This variable stores the number of bytes the buffer contains
+	char frame[105];
+	GetHeap(frame);
+	TEST_ASSERT_EQUAL_HEX16('3',frame[1]);
+	TEST_ASSERT_EQUAL_HEX16('1',frame[2]);
+	TEST_ASSERT_EQUAL_HEX16('4',frame[3]);
 }
-
-void test_tp3_1(void){						//This is the start of th first test length()
-	TEST_FAIL_MESSAGE("Failed");
-	uint16_t buf[10];						//Declaring a buffer for test purpose of size 10
-	uint16_t cant;							//This variable stores the number of bytes the buffer contains
-	length(buf,&cant);						//This is our function to test, it measures the number of bytes of a buffer
-	TEST_ASSERT_EQUAL_HEX16(5,cant);		//This function  checks if length() did really count correctly the number of  bytes, assuming it is 5
-
+void test_tp3_2(void){							//Test update FSM function that updates the state and does different stuff accordingly every time the function is called
+	//TEST_FAIL_MESSAGE("Failed");
+	ptr=&performance;
+	ptr->estado=0;
+	fsmMesurePerformance(ptr,NULL,NULL);
+	TEST_ASSERT_EQUAL_HEX16(1,ptr->estado);
+	TEST_ASSERT_EQUAL_HEX16(1,ptr->id_of_package);
+	TEST_ASSERT_EQUAL_HEX16(0,ptr->tiempo_de_llegada);
+	TEST_ASSERT_EQUAL_HEX16(1,ptr->tiempo_de_recepcion);
 }
-void test_tp3_2(void){						//This is the start of the second test to test bufsize()
-	TEST_FAIL_MESSAGE("Failed");			//Error message if test fails
-	uint16_t buf[10];						//Declaring a buffer for test purpose of size 10
-	uint16_t size;							///This variable stores the number of bytes the buffer contains
-	bufsize(buf,&size);						//This is the function to test, it measures the size of a given buffer  and saves the result in the variable size
-	TEST_ASSERT_EQUAL_HEX16(10,size);		//Verify of the returned value is correct
-
+void test_tp3_3(void){												//Test if the second  FSM function call updated the corresponding  fields  according to the new state
+	//TEST_FAIL_MESSAGE("Failed");
+	ptr=&performance;
+	char msg[100]="Hola, this is a test";
+	fsmMesurePerformance(ptr,msg,sizeof(msg));
+	TEST_ASSERT_EQUAL_HEX16(2,ptr->estado);
+	TEST_ASSERT_EQUAL_HEX16(strlen(msg),ptr->package_length);
+	TEST_ASSERT_EQUAL_HEX16(sizeof(msg),ptr->alocated_memory);
 }
-
-void test_tp3_3(void){						//This is the third test to test sumsat()
-	TEST_FAIL_MESSAGE("Failed");			//Error message if test fails
-	uint16_t MAX=0xffff;					//Set MAX to the maximum value 16 bit register can have
-	uint16_t value;							//Value is the argument passed to the function
-	sumsat(&value);							//This is the function to test, it increment the passed argument and the purpose is to know when it is saturated
-	TEST_ASSERT_EQUAL_HEX16(MAX,value);     //Check if the function does really saturate the variable
-
+void test_tp3_4(void){											   //Test if CompileToken() did compile the token from the the structure fields and if it has the right operation number
+	//TEST_FAIL_MESSAGE("Failed");
+	ptr=&performance;
+	char token[100];
+	bzero(token,strlen(token));
+	CompileToken(ptr,token);
+	TEST_ASSERT_EQUAL_HEX16('5',token[1]);
 }
-void test_tp3_4(void){						// This is the 4th function to test subsat()
-	TEST_FAIL_MESSAGE("Failed");
-	uint16_t MIN=0x0000;					//MIN is used to for comparison purpose against the argument passed to the function
-	uint16_t value;							//This variable  holds the value passed to the function
-	subsat(&value);							//This is the function to test, it saturates the given argument to zero
-	TEST_ASSERT_EQUAL_HEX16(MIN,value);		//Check if the function did really saturated the argument
-
+void test_tp3_5(void){											//Test if ASCII function converts Hexdecimal to ASCII correctly by verifying the first letter
+	//TEST_FAIL_MESSAGE("Failed");
+	char ascii[55];
+	char hex[105]="68 6f 6c 61";
+	printf("%s ",hex);
+	ASCI(hex,strlen(hex),ascii);
+	TEST_ASSERT_EQUAL_HEX16('o',ascii[1]);									//This function  checks if length() did really count correctly the number of  bytes, assuming it is 5
 }
-
-void test_tp3_5(void){						//This is the 5th test function to test twice()
-	TEST_FAIL_MESSAGE("Failed");
-	uint16_t x;								//First argument  goes here
-	uint16_t y=2*x;							//The second argument  is stored here which is twice the first (x)
-	twice(&x);								//The function  takes the variable pointer and doubles its value
-	TEST_ASSERT_EQUAL_HEX16(y,x);			//Check if the value was really doubled
-}
-
-
-
 /*==================[external functions definition]==========================*/
 
 /*==================[Principal function ]======================================*/

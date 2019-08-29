@@ -1,4 +1,6 @@
 #include "build/temp/_test_tp3.c"
+#include "driver_testing.h"
+#include "service_testing.h"
 #include "tp3.h"
 #include "unity.h"
 
@@ -7,7 +9,9 @@
 
 
 
+static struct MedirPerformance performance;
 
+Token_pt ptr;
 
 
 
@@ -19,29 +23,13 @@ void test_tp3_2(void);
 
 void test_tp3_3(void);
 
-void test_tp3_4(void);
-
-void test_tp3_5(void)
 
 
 
 
 
 
-
-
-
-
-
-;
-
-void tearDown(void){
-
-
-
-
-
-}
+void tearDown(void){}
 
 
 
@@ -49,109 +37,143 @@ void test_tp3_1(void){
 
 
 
- uint16_t buf[10];
+ char frame[105];
 
- uint16_t cant;
+ GetHeap(frame);
 
- length(buf,&cant);
-
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((5)), (UNITY_INT)(UNITY_INT16)((cant)), (
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('3')), (UNITY_INT)(UNITY_INT16)((frame[1])), (
 
 ((void *)0)
 
-), (UNITY_UINT)(63), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(54), UNITY_DISPLAY_STYLE_HEX16);
 
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('1')), (UNITY_INT)(UNITY_INT16)((frame[2])), (
 
+((void *)0)
+
+), (UNITY_UINT)(55), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('4')), (UNITY_INT)(UNITY_INT16)((frame[3])), (
+
+((void *)0)
+
+), (UNITY_UINT)(56), UNITY_DISPLAY_STYLE_HEX16);
 
 }
 
 void test_tp3_2(void){
 
- UnityFail( (("Failed")), (UNITY_UINT)(67));
 
- uint16_t buf[10];
 
- uint16_t size;
+ ptr=&performance;
 
- bufsize(buf,&size);
+ ptr->estado=0;
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((10)), (UNITY_INT)(UNITY_INT16)((size)), (
+ fsmMesurePerformance(ptr,
+
+                         ((void *)0)
+
+                             ,
+
+                              ((void *)0)
+
+                                  );
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((1)), (UNITY_INT)(UNITY_INT16)((ptr->estado)), (
 
 ((void *)0)
 
-), (UNITY_UINT)(71), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(63), UNITY_DISPLAY_STYLE_HEX16);
 
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((1)), (UNITY_INT)(UNITY_INT16)((ptr->id_of_package)), (
 
+((void *)0)
+
+), (UNITY_UINT)(64), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((0)), (UNITY_INT)(UNITY_INT16)((ptr->tiempo_de_llegada)), (
+
+((void *)0)
+
+), (UNITY_UINT)(65), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((1)), (UNITY_INT)(UNITY_INT16)((ptr->tiempo_de_recepcion)), (
+
+((void *)0)
+
+), (UNITY_UINT)(66), UNITY_DISPLAY_STYLE_HEX16);
 
 }
 
-
-
 void test_tp3_3(void){
 
- UnityFail( (("Failed")), (UNITY_UINT)(76));
 
- uint16_t MAX=0xffff;
 
- uint16_t value;
+ ptr=&performance;
 
- sumsat(&value);
+ char msg[100]="Hola, this is a test";
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((MAX)), (UNITY_INT)(UNITY_INT16)((value)), (
+ fsmMesurePerformance(ptr,msg,sizeof(msg));
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((2)), (UNITY_INT)(UNITY_INT16)((ptr->estado)), (
 
 ((void *)0)
 
-), (UNITY_UINT)(80), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(73), UNITY_DISPLAY_STYLE_HEX16);
 
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((strlen(msg))), (UNITY_INT)(UNITY_INT16)((ptr->package_length)), (
 
+((void *)0)
+
+), (UNITY_UINT)(74), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((sizeof(msg))), (UNITY_INT)(UNITY_INT16)((ptr->alocated_memory)), (
+
+((void *)0)
+
+), (UNITY_UINT)(75), UNITY_DISPLAY_STYLE_HEX16);
 
 }
 
 void test_tp3_4(void){
 
- UnityFail( (("Failed")), (UNITY_UINT)(84));
 
- uint16_t MIN=0x0000;
 
- uint16_t value;
+ ptr=&performance;
 
- subsat(&value);
+ char token[100];
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((MIN)), (UNITY_INT)(UNITY_INT16)((value)), (
+ bzero(token,strlen(token));
+
+ CompileToken(ptr,token);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('5')), (UNITY_INT)(UNITY_INT16)((token[1])), (
 
 ((void *)0)
 
-), (UNITY_UINT)(88), UNITY_DISPLAY_STYLE_HEX16);
-
-
+), (UNITY_UINT)(83), UNITY_DISPLAY_STYLE_HEX16);
 
 }
-
-
 
 void test_tp3_5(void){
 
- UnityFail( (("Failed")), (UNITY_UINT)(93));
 
- uint16_t x;
 
- uint16_t y=2*x;
+ char ascii[55];
 
- twice(&x);
+ char hex[105]="68 6f 6c 61";
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((y)), (UNITY_INT)(UNITY_INT16)((x)), (
+ printf("%s ",hex);
+
+ ASCI(hex,strlen(hex),ascii);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('o')), (UNITY_INT)(UNITY_INT16)((ascii[1])), (
 
 ((void *)0)
 
-), (UNITY_UINT)(97), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(91), UNITY_DISPLAY_STYLE_HEX16);
 
 }
-
-
-
-
-
-
 
 
 
