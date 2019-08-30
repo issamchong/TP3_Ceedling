@@ -142,6 +142,28 @@ void GetHeap(char *frame){
 	   strcat(frame,data);											//Add the actual data to be displayed
 	   strcat(frame,"}");											//Add the EOF
 }
+int match(char *str1,char *str2){
+
+	   while (*str1 == *str2) {
+	      if (*str1 == '\0' || *str2 == '\0')
+	         break;
+
+	      str1++;												//Increment until you reach the last empty byte of any string "\0"
+	      str2++;
+	   }
+       //come here when the pointer is pointing at nothing "\0"
+	   if (*str1 == '\0' && *str2 == '\0')						//Check if both pointers are pointing at the end of the string
+	      return 0;
+	   else
+	      return -1;
+
+}
+int GetData(char *data, const char* buffer ){
+
+	strcpy(data,buffer+4);
+	data[strlen(data)-1]='\0';
+	return 1;
+}
 
 
 

@@ -52,6 +52,8 @@ typedef struct MedirPerformance *Token_pt;												//Define a pointer type th
 int fsmMesurePerformance(Token_pt t, uint8_t *pLoad,uint16_t memSize);
 int CompileToken(Token_pt pt, char *msg);													//This function compiles the token message in a string form from the integer fields of the token structure
 void GetHeap(char *frame);																	//Get Heap size
+int GetData(char *data, const char* buffer);
+int match(char *str1,char *str2);
 /*==================[cplusplus]==============================================*/
 
 #ifdef __cplusplus

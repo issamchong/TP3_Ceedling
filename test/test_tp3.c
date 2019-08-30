@@ -47,40 +47,44 @@ void test_tp3_3(void);
 /*==================[internal functions definition]==========================*/
 void tearDown(void){}					   		//This function is used by ceedling and needs to be empty
 
-void test_tp3_1(void){							//Test GetHeap function
-	//TEST_FAIL_MESSAGE("Failed");				//This variable stores the number of bytes the buffer contains
-	char frame[105];
-	GetHeap(frame);
-	TEST_ASSERT_EQUAL_HEX16('3',frame[1]);
-	TEST_ASSERT_EQUAL_HEX16('1',frame[2]);
-	TEST_ASSERT_EQUAL_HEX16('4',frame[3]);
+void test_tp3_1(void){							//Test GetHeap function, this function extracts the data section from a package and is used inside other functions
+	char package[]="{004hello}";
+	char data[100];
+	GetData(data,package);
+	printf("%s", data);
+	TEST_ASSERT_EQUAL_HEX16('h',data[0]);
+	TEST_ASSERT_EQUAL_HEX16('e',data[1]);
+	TEST_ASSERT_EQUAL_HEX16('l',data[2]);
+	TEST_ASSERT_EQUAL_HEX16('l',data[3]);
+	TEST_ASSERT_EQUAL_HEX16('o',data[4]);
+
 }
-void test_tp3_2(void){							//Test update FSM function that updates the state and does different stuff accordingly every time the function is called
-	//TEST_FAIL_MESSAGE("Failed");
-	ptr=&performance;
-	ptr->estado=0;
-	fsmMesurePerformance(ptr,NULL,NULL);
-	TEST_ASSERT_EQUAL_HEX16(1,ptr->estado);
-	TEST_ASSERT_EQUAL_HEX16(1,ptr->id_of_package);
-	TEST_ASSERT_EQUAL_HEX16(0,ptr->tiempo_de_llegada);
-	TEST_ASSERT_EQUAL_HEX16(1,ptr->tiempo_de_recepcion);
+void test_tp3_2(void){												//Test if two buffer content is the same
+
+	char buff1[]="abc";
+	char buff2[]="abc";
+	int result=match(buff1,buff2);
+	TEST_ASSERT_EQUAL_HEX16(0,result);
+
 }
 void test_tp3_3(void){												//Test if the second  FSM function call updated the corresponding  fields  according to the new state
 	//TEST_FAIL_MESSAGE("Failed");
 	ptr=&performance;
 	char msg[100]="Hola, this is a test";
+	fsmMesurePerformance(ptr,NULL,NULL);
 	fsmMesurePerformance(ptr,msg,sizeof(msg));
 	TEST_ASSERT_EQUAL_HEX16(2,ptr->estado);
 	TEST_ASSERT_EQUAL_HEX16(strlen(msg),ptr->package_length);
 	TEST_ASSERT_EQUAL_HEX16(sizeof(msg),ptr->alocated_memory);
 }
-void test_tp3_4(void){											   //Test if CompileToken() did compile the token from the the structure fields and if it has the right operation number
+void test_tp3_4(void){											   //Test if CompileToken() did compile the token and included the correct ID based on the previous call of fsmMesurePerformance() that has set the ID
 	//TEST_FAIL_MESSAGE("Failed");
 	ptr=&performance;
 	char token[100];
 	bzero(token,strlen(token));
 	CompileToken(ptr,token);
-	TEST_ASSERT_EQUAL_HEX16('5',token[1]);
+	//printf("test id is in token %c", token[5]);
+	TEST_ASSERT_EQUAL_HEX16('1',token[5]);
 }
 void test_tp3_5(void){											//Test if ASCII function converts Hexdecimal to ASCII correctly by verifying the first letter
 	//TEST_FAIL_MESSAGE("Failed");
