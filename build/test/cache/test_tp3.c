@@ -35,39 +35,39 @@ void tearDown(void){}
 
 void test_tp3_1(void){
 
- char package[]="{004hello}";
+ char package[]="{005hello}";
 
  char data[100];
 
- GetData(data,package);
+ op0(data,package);
 
  printf("%s", data);
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('h')), (UNITY_INT)(UNITY_INT16)((data[0])), (
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('H')), (UNITY_INT)(UNITY_INT16)((data[4])), (
 
 ((void *)0)
 
 ), (UNITY_UINT)(55), UNITY_DISPLAY_STYLE_HEX16);
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('e')), (UNITY_INT)(UNITY_INT16)((data[1])), (
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('E')), (UNITY_INT)(UNITY_INT16)((data[5])), (
 
 ((void *)0)
 
 ), (UNITY_UINT)(56), UNITY_DISPLAY_STYLE_HEX16);
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('l')), (UNITY_INT)(UNITY_INT16)((data[2])), (
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('L')), (UNITY_INT)(UNITY_INT16)((data[6])), (
 
 ((void *)0)
 
 ), (UNITY_UINT)(57), UNITY_DISPLAY_STYLE_HEX16);
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('l')), (UNITY_INT)(UNITY_INT16)((data[3])), (
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('L')), (UNITY_INT)(UNITY_INT16)((data[7])), (
 
 ((void *)0)
 
 ), (UNITY_UINT)(58), UNITY_DISPLAY_STYLE_HEX16);
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('o')), (UNITY_INT)(UNITY_INT16)((data[4])), (
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('O')), (UNITY_INT)(UNITY_INT16)((data[8])), (
 
 ((void *)0)
 
@@ -81,17 +81,45 @@ void test_tp3_2(void){
 
 
 
- char buff1[]="abc";
+ char package[]="{005HELLO}";
 
- char buff2[]="abc";
+ char data[100];
 
- int result=match(buff1,buff2);
+ op1(data,package);
 
- UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((0)), (UNITY_INT)(UNITY_INT16)((result)), (
+ printf("%s", data);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('h')), (UNITY_INT)(UNITY_INT16)((data[4])), (
 
 ((void *)0)
 
-), (UNITY_UINT)(67), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(68), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('e')), (UNITY_INT)(UNITY_INT16)((data[5])), (
+
+((void *)0)
+
+), (UNITY_UINT)(69), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('l')), (UNITY_INT)(UNITY_INT16)((data[6])), (
+
+((void *)0)
+
+), (UNITY_UINT)(70), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('l')), (UNITY_INT)(UNITY_INT16)((data[7])), (
+
+((void *)0)
+
+), (UNITY_UINT)(71), UNITY_DISPLAY_STYLE_HEX16);
+
+ UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)(('o')), (UNITY_INT)(UNITY_INT16)((data[8])), (
+
+((void *)0)
+
+), (UNITY_UINT)(72), UNITY_DISPLAY_STYLE_HEX16);
+
+
 
 
 
@@ -121,19 +149,19 @@ void test_tp3_3(void){
 
 ((void *)0)
 
-), (UNITY_UINT)(76), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(82), UNITY_DISPLAY_STYLE_HEX16);
 
  UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((strlen(msg))), (UNITY_INT)(UNITY_INT16)((ptr->package_length)), (
 
 ((void *)0)
 
-), (UNITY_UINT)(77), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(83), UNITY_DISPLAY_STYLE_HEX16);
 
  UnityAssertEqualNumber((UNITY_INT)(UNITY_INT16)((sizeof(msg))), (UNITY_INT)(UNITY_INT16)((ptr->alocated_memory)), (
 
 ((void *)0)
 
-), (UNITY_UINT)(78), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(84), UNITY_DISPLAY_STYLE_HEX16);
 
 }
 
@@ -155,7 +183,7 @@ void test_tp3_4(void){
 
 ((void *)0)
 
-), (UNITY_UINT)(87), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(93), UNITY_DISPLAY_STYLE_HEX16);
 
 }
 
@@ -173,7 +201,7 @@ void test_tp3_5(void){
 
 ((void *)0)
 
-), (UNITY_UINT)(94), UNITY_DISPLAY_STYLE_HEX16);
+), (UNITY_UINT)(100), UNITY_DISPLAY_STYLE_HEX16);
 
 }
 

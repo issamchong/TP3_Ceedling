@@ -77,8 +77,8 @@ int main(void)
   RUN_TEST(test_tp3_1, 42);
   RUN_TEST(test_tp3_2, 43);
   RUN_TEST(test_tp3_3, 44);
-  RUN_TEST(test_tp3_4, 80);
-  RUN_TEST(test_tp3_5, 89);
+  RUN_TEST(test_tp3_4, 86);
+  RUN_TEST(test_tp3_5, 95);
 
   return suite_teardown(UnityEnd());
 }

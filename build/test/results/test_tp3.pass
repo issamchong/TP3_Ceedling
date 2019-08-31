@@ -13,10 +13,10 @@
   :line: 44
   :message: ''
 - :test: test_tp3_4
-  :line: 80
+  :line: 86
   :message: ''
 - :test: test_tp3_5
-  :line: 89
+  :line: 95
   :message: ''
 :failures: []
 :ignores: []
@@ -26,5 +26,8 @@
   :failed: 0
   :ignored: 0
 :stdout:
-- hello
-:time: 0.0022665360011160374
+- the same op0
+- "{005HELLO}"
+- the same op1
+- "{005hello}"
+:time: 0.0017385239989380352

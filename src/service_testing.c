@@ -12,6 +12,27 @@
 	volatile uint16_t  time2=0;
 /*==================[internal functions declaration]=========================*/
 /*==================[internal data definition]===============================*/
+	void upper_string(char s[]) {
+	   int c = 0;
+
+	   while (s[c] != '\0') {
+	      if (s[c] >= 'a' && s[c] <= 'z') {
+	         s[c] = s[c] - 32;
+	      }
+	      c++;
+	   }
+	}
+
+	void lower_string(char s[]) {
+	   int c = 0;
+
+	   while (s[c] != '\0') {
+	      if (s[c] >= 'A' && s[c] <= 'Z') {
+	         s[c] = s[c] + 32;
+	      }
+	      c++;
+	   }
+	}
 /*==================[external data definition]===============================*/
 /*==================[internal functions definition]==========================*/
 /*==================[external functions definition]==========================*/
@@ -126,44 +147,116 @@ int fsmMesurePerformance(Token_pt  t, uint8_t *pload, uint16_t AloMem){
 	}
 	return 0;
 }
-void GetHeap(char *frame){
-	   uint8_t Heap =125;
-	   char sizeHeap[10];
-	   char pload_len[3];
-	   char data[100];
 
-	   snprintf(sizeHeap,sizeof(sizeHeap),"%d",Heap);              //Convert Heap variable into string and save it in sizeHeap
-	   strcpy(data," Heap size is ");								//Add text to data
-	   snprintf(pload_len,sizeof(pload_len),"%d",strlen(data));							//Get data buffer length and save it in pload_len
-	   strcat(data,sizeHeap);										//Add heap size to data
-	   strcpy(frame,"{");											//Add SOF
-	   strcat(frame,"3");											//Add operation number to the frame as a string
-	   strcat(frame,pload_len);										//Add the payload length to the frame
-	   strcat(frame,data);											//Add the actual data to be displayed
-	   strcat(frame,"}");											//Add the EOF
+
+int op0(char *data, const char* buffer ){
+
+	char temp[100];
+	char SizeData[5];																//This string is used to store the size bytes of the data
+	char pload_lenth[5];
+	int n=0;
+	if(!((buffer[0]=='{') && (buffer[strlen(buffer)-1]=='}'))){						//Verify if either start of frame or end of frame is not valid
+		puts("Invalid Frame op0");												//Display error if frame does not have "{" or "}"
+		}else{
+			bzero(SizeData,sizeof(SizeData));
+			bzero(pload_lenth,sizeof(pload_lenth));
+			SizeData[0]=buffer[2];												   // Save the first byte of the size field in first  element of this buffer
+		    SizeData[1]=buffer[3];												   //Save the second byte of size field in this second element  of this buffer
+	    //	puts(SizeData);
+	    //	puts(SizeData);
+	    	strcpy(data,buffer+4);													//Get payload only and save it in data
+		    data[strlen(data)-1]='\0';     											//get rid of EOF "}"
+	    //	puts(data);
+		    snprintf(pload_lenth,4,"%d\n",strlen(data));
+	    	//puts(pload_lenth);
+		  //  printf("lenth is %d\n",strlen(pload_lenth)-1);
+	    	if((strlen(pload_lenth)-1)==1){
+		    	if(SizeData[1]==pload_lenth[0]){
+			    	printf("the same op0\n");
+			    	strcpy(temp,buffer);												//Copy package content to temp
+			    	temp[4]='\0';
+			     	upper_string(data);
+			    	strcat(temp,data);													//add to temp the processed data
+			    	strcpy(data,temp);													//copy temp content back to data
+			    	data[strlen(data)]='}';      										//Add EOF
+			    	//puts(data);
+			    	bzero(temp,strlen(temp));
+		    	}else{
+		    		puts("Data corropted op0");
+		    	}
+
+		    }else{
+		    	if((SizeData[0]==pload_lenth[0])&&(SizeData[1]==pload_lenth[1])){		//verify length is the same in case of two bytes length
+		    		printf("the same op0\n");
+		    		strcpy(temp,buffer);												//Copy package content to temp
+		    		temp[4]='\0';
+		    		upper_string(data);
+		    		strcat(temp,data);													//add to temp the processed data
+		    		strcpy(data,temp);													//copy temp content back to data
+		    		data[strlen(data)]='}';      										//Add EOF
+		    		//puts(data);
+		    		bzero(temp,strlen(temp));
+		    	}else{
+		    		puts("Data corropted op0");
+		    	}
+		    }
+		}
 }
-int match(char *str1,char *str2){
 
-	   while (*str1 == *str2) {
-	      if (*str1 == '\0' || *str2 == '\0')
-	         break;
+int op1(char *data, const char* buffer ){
 
-	      str1++;												//Increment until you reach the last empty byte of any string "\0"
-	      str2++;
-	   }
-       //come here when the pointer is pointing at nothing "\0"
-	   if (*str1 == '\0' && *str2 == '\0')						//Check if both pointers are pointing at the end of the string
-	      return 0;
-	   else
-	      return -1;
+	char temp[100];
+	char SizeData[5];																//This string is used to store the size bytes of the data
+	char pload_lenth[5];
+	int n=0;
+	if(!((buffer[0]=='{') && (buffer[strlen(buffer)-1]=='}'))){						//Verify if either start of frame or end of frame is not valid
+		puts(" Invalid Frame op1");												//Display error if frame does not have "{" or "}"
+		}else{
+			bzero(SizeData,sizeof(SizeData));
+			bzero(pload_lenth,sizeof(pload_lenth));
+			SizeData[0]=buffer[2];												   // Save the first byte of the size field in first  element of this buffer
+		    SizeData[1]=buffer[3];												   //Save the second byte of size field in this second element  of this buffer
+	   // 	puts(SizeData);
+	   // 	puts(SizeData);
+	    	strcpy(data,buffer+4);													//Get payload only and save it in data
+		    data[strlen(data)-1]='\0';     											//get rid of EOF "}"
+	    //	puts(data);
+		    snprintf(pload_lenth,4,"%d\n",strlen(data));
+	    //	puts(pload_lenth);
+		  //  printf("lenth is %d\n",strlen(pload_lenth)-1);
+	    	if((strlen(pload_lenth)-1)==1){												//Verify that the number of bytes is less than 10
+		    	if(SizeData[1]==pload_lenth[0]){										//Verify that length of payload is the same in case of 1 byte length
+			    	printf("the same op1\n");
+			    	strcpy(temp,buffer);												//Copy package content to temp
+			    	temp[4]='\0';
+			    	lower_string(data);
+			    	strcat(temp,data);													//add to temp the processed data
+			    	strcpy(data,temp);													//copy temp content back to data
+			    	data[strlen(data)]='}';      										//Add EOF
+			    	//puts(data);
+			    	bzero(temp,strlen(temp));
+		    	}else{
+		    		puts("Data corropted op1");
+		    	}
 
+		    }else{
+		    	if((SizeData[0]==pload_lenth[0])&&(SizeData[1]==pload_lenth[1])){		//verify that the payload length is the same in case of two bytes
+		    		printf("the same op1\n");
+		    		strcpy(temp,buffer);												//Copy package content to temp
+		    		temp[4]='\0';
+		    		lower_string(data);
+		    		strcat(temp,data);													//add to temp the processed data
+		    		strcpy(data,temp);													//copy temp content back to data
+		    		data[strlen(data)]='}';      										//Add EOF
+		    		//puts(data);
+		    		bzero(temp,strlen(temp));
+		    	}else{
+		    		puts("Data corropted op1");
+		    	}
+		    }
+		}
 }
-int GetData(char *data, const char* buffer ){
 
-	strcpy(data,buffer+4);
-	data[strlen(data)-1]='\0';
-	return 1;
-}
 
 
 

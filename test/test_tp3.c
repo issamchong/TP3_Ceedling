@@ -48,23 +48,29 @@ void test_tp3_3(void);
 void tearDown(void){}					   		//This function is used by ceedling and needs to be empty
 
 void test_tp3_1(void){							//Test GetHeap function, this function extracts the data section from a package and is used inside other functions
-	char package[]="{004hello}";
+	char package[]="{005hello}";
 	char data[100];
-	GetData(data,package);
+	op0(data,package);
 	printf("%s", data);
-	TEST_ASSERT_EQUAL_HEX16('h',data[0]);
-	TEST_ASSERT_EQUAL_HEX16('e',data[1]);
-	TEST_ASSERT_EQUAL_HEX16('l',data[2]);
-	TEST_ASSERT_EQUAL_HEX16('l',data[3]);
-	TEST_ASSERT_EQUAL_HEX16('o',data[4]);
+	TEST_ASSERT_EQUAL_HEX16('H',data[4]);
+	TEST_ASSERT_EQUAL_HEX16('E',data[5]);
+	TEST_ASSERT_EQUAL_HEX16('L',data[6]);
+	TEST_ASSERT_EQUAL_HEX16('L',data[7]);
+	TEST_ASSERT_EQUAL_HEX16('O',data[8]);
 
 }
 void test_tp3_2(void){												//Test if two buffer content is the same
 
-	char buff1[]="abc";
-	char buff2[]="abc";
-	int result=match(buff1,buff2);
-	TEST_ASSERT_EQUAL_HEX16(0,result);
+	char package[]="{005HELLO}";
+	char data[100];
+	op1(data,package);
+	printf("%s", data);
+	TEST_ASSERT_EQUAL_HEX16('h',data[4]);
+	TEST_ASSERT_EQUAL_HEX16('e',data[5]);
+	TEST_ASSERT_EQUAL_HEX16('l',data[6]);
+	TEST_ASSERT_EQUAL_HEX16('l',data[7]);
+	TEST_ASSERT_EQUAL_HEX16('o',data[8]);
+
 
 }
 void test_tp3_3(void){												//Test if the second  FSM function call updated the corresponding  fields  according to the new state
